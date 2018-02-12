@@ -11,6 +11,8 @@ sealed case class Organisation(
                                 address: Address
                               )
 
+sealed case class CreateOrgReq(name: String, email: String, `type`: String, address: Address)
+
 sealed case class UserProfile(
                                id: String,
                                firstname: String,
@@ -18,14 +20,16 @@ sealed case class UserProfile(
                                email: String,
                                salutation: String,
                                telephone: String,
-                               `type`: String
+                               `type`: String,
+                               organisation: Organisation
                              )
 
 sealed case class CreateUserReq(
-                               firstname: String,
-                               lastname: String,
-                               email: String,
-                               salutation: String,
-                               telephone: String,
-                               `type`: String
-                             )
+                                 firstname: String,
+                                 lastname: String,
+                                 email: String,
+                                 salutation: String,
+                                 telephone: String,
+                                 `type`: String,
+                                 orgName: String
+                               )
