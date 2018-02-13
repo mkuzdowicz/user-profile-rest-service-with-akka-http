@@ -1,14 +1,11 @@
 package com.kuzdowiczm.web.rest.upservice
 
-import com.kuzdowiczm.web.rest.upservice.db.{UserProfilesRepo, UserProfilesRepoInMemoImpl}
-
+import com.kuzdowiczm.web.rest.upservice.db.UserProfilesRepo
 
 object UserProfilesService {
-
   def apply(implicit usrProfilesRepo: UserProfilesRepo): UserProfilesService = {
     new UserProfilesService()
   }
-
 }
 
 class UserProfilesService(implicit private val usrProfilesRepo: UserProfilesRepo) {
