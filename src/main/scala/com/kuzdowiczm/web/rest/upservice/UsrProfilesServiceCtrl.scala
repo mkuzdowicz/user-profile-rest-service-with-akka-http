@@ -52,14 +52,16 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
         } ~
           post {
             entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
-              val newUsr = usrProfilesService.createOrUpdate(createUsrReq)
+              val newUsr = usrProfilesService.createOrUpdate(createUsrReq).get
               complete(Created, s"new user created with id: ${newUsr.id}")
             }
           } ~
           put {
             entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
-              val updatedUsr = usrProfilesService.createOrUpdate(updateUsrReq)
-              complete(OK, s"user with id: ${updatedUsr.id} updated")
+              usrProfilesService.createOrUpdate(updateUsrReq) match {
+                case Some(usr) => complete(OK, s"user with id: ${usr.id} updated")
+                case None => complete(NotFound, s"there is no user profile with id: ${updateUsrReq.id}")
+              }
             }
           }
       }

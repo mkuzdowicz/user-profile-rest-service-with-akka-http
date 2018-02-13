@@ -4,7 +4,7 @@ import com.kuzdowiczm.web.rest.upservice.{CreateOrUpdateUserReq, Organisation, U
 
 trait UserProfilesRepo {
 
-  def createOrUpdateFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): UserProfile
+  def createOrUpdateFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): Option[UserProfile]
 
   def findBy(id: String): Option[UserProfile]
 

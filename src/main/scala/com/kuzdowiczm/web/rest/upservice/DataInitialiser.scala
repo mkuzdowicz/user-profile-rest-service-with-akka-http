@@ -32,7 +32,7 @@ object DataInitialiser {
         orgName = "Advice UK",
         address = Address(postcode = "E14 9EP")
       )
-    )
+    ).get
 
     log.info(s"usr1 => ${usr1.id}")
 
