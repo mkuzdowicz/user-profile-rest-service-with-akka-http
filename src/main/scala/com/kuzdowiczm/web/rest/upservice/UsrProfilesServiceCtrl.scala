@@ -18,14 +18,19 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
   private val usrProfilesService = UserProfilesService.apply
 
   val route = pathPrefix("users") {
-    path(Segment) { id =>
+    pathEnd {
       get {
-        complete {
-          val res = usrProfilesService.findBy(id)
-          res
+        complete("Welcome to user-profiles-service")
+      }
+    } ~
+      path(Segment) { id =>
+        get {
+          complete {
+            val res = usrProfilesService.findBy(id)
+            res
+          }
         }
       }
-    }
   }
 
 }
