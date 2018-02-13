@@ -1,15 +1,15 @@
-package com.kuzdowiczm.web.rest.upservice
+package com.kuzdowiczm.web.rest.upservice.db
 
 import java.util.UUID
 
-object UserProfilesRepo {
+import com.kuzdowiczm.web.rest.upservice._
 
-  def addOne(createUserReq: CreateUserReq): String = {
+object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
 
-    val org = OrganisationsRepo.findOneBy(createUserReq.orgName).orNull
+  def createOneFrom(createUserReq: CreateUserReq, org: Organisation): String = {
 
     val uuid = UUID.randomUUID().toString
-    DB.userProfiles += uuid -> UserProfile(
+    InMemoDB.userProfiles += uuid -> UserProfile(
       id = uuid,
       firstname = createUserReq.firstname,
       lastname = createUserReq.lastname,
@@ -17,13 +17,14 @@ object UserProfilesRepo {
       salutation = createUserReq.salutation,
       telephone = createUserReq.telephone,
       `type` = createUserReq.`type`,
-      organisation = org
+      organisation = org,
+      address = createUserReq.address
     )
     uuid
   }
 
   def findBy(id: String): Option[UserProfile] = {
-    DB.userProfiles.get(id)
+    InMemoDB.userProfiles.get(id)
   }
 
 }

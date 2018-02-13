@@ -21,7 +21,8 @@ sealed case class UserProfile(
                                salutation: String,
                                telephone: String,
                                `type`: String,
-                               organisation: Organisation
+                               organisation: Organisation,
+                               address: Address
                              )
 
 sealed case class CreateUserReq(
@@ -31,5 +32,6 @@ sealed case class CreateUserReq(
                                  salutation: String,
                                  telephone: String,
                                  `type`: String,
-                                 orgName: String
+                                 orgName: String,
+                                 address: Address
                                )

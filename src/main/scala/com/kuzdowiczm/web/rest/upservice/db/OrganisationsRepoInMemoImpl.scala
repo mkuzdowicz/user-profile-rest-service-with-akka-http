@@ -1,12 +1,14 @@
-package com.kuzdowiczm.web.rest.upservice
+package com.kuzdowiczm.web.rest.upservice.db
 
 import java.util.UUID
 
-object OrganisationsRepo {
+import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
+
+object OrganisationsRepoInMemoImpl extends OrganisationsRepo {
 
   def add(createOrgReq: CreateOrgReq): String = {
     val orgUUID = UUID.randomUUID().toString
-    DB.organisations += createOrgReq.name -> Organisation(
+    InMemoDB.organisations += createOrgReq.name -> Organisation(
       id = orgUUID,
       name = createOrgReq.name,
       email = createOrgReq.email,
@@ -17,7 +19,7 @@ object OrganisationsRepo {
   }
 
   def findOneBy(name: String): Option[Organisation] = {
-    DB.organisations.get(name)
+    InMemoDB.organisations.get(name)
   }
 
 }
