@@ -1,6 +1,6 @@
 package com.kuzdowiczm.web.rest.upservice.services
 
-import com.kuzdowiczm.web.rest.upservice.repository.{OrganisationsRepo, UserProfilesRepo}
+import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.{CreateUserReq, UserProfile}
 
 object UserProfilesService {
@@ -17,6 +17,10 @@ class UserProfilesService(implicit private val usrProfilesRepo: UserProfilesRepo
 
   def findBy(id: String): UserProfile = {
     usrProfilesRepo.findBy(id).orNull
+  }
+
+  def deleteBy(id: String): Boolean = {
+    usrProfilesRepo.deleteBy(id)
   }
 }
 

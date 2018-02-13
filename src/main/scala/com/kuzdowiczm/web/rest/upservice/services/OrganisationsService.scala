@@ -1,6 +1,6 @@
 package com.kuzdowiczm.web.rest.upservice.services
 
-import com.kuzdowiczm.web.rest.upservice.repository.OrganisationsRepo
+import com.kuzdowiczm.web.rest.upservice.repositories.OrganisationsRepo
 import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
 
 object OrganisationsService {

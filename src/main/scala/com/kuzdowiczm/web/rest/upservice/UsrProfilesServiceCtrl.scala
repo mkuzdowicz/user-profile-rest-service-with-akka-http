@@ -2,7 +2,7 @@ package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.Directives
-import com.kuzdowiczm.web.rest.upservice.repository.{OrganisationsRepo, UserProfilesRepo}
+import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import spray.json.DefaultJsonProtocol
 
@@ -10,6 +10,7 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
   implicit val addressFormat = jsonFormat1(Address)
   implicit val organisationFormat = jsonFormat5(Organisation)
   implicit val usrProfileFormat = jsonFormat9(UserProfile)
+  implicit val createUserReq = jsonFormat8(CreateUserReq)
 }
 
 class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
@@ -34,11 +35,29 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
         path(Segment) { id =>
           get {
             complete {
-              val res = usrProfilesService.findBy(id)
+              val result = usrProfilesService.findBy(id)
+              result
+            }
+          } ~ delete {
+            complete {
+              val result = usrProfilesService.deleteBy(id)
+              val res = if (result) s"deleted user with id: $id" else s"no user found for id: $id"
               res
             }
           }
-        }
+        } ~
+          post {
+            entity(as[CreateUserReq]) { createUsrReq =>
+              val nUsrId = usrProfilesService.add(createUsrReq)
+              complete(s"new user created with id: $nUsrId")
+            }
+          } ~
+          put {
+            entity(as[CreateUserReq]) { createUsrReq =>
+              val nUsrId = usrProfilesService.add(createUsrReq)
+              complete(s"user updated")
+            }
+          }
       }
 
 }

@@ -1,4 +1,4 @@
-package com.kuzdowiczm.web.rest.upservice.repository
+package com.kuzdowiczm.web.rest.upservice.repositories
 
 import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
 

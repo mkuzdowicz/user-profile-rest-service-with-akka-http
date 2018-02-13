@@ -1,8 +1,8 @@
-package com.kuzdowiczm.web.rest.upservice.repository
+package com.kuzdowiczm.web.rest.upservice.repositories.inmemodb
 
 import com.kuzdowiczm.web.rest.upservice.{Organisation, UserProfile}
 
-private[repository] object InMemoDB {
+private[repositories] object InMemoDB {
 
   val userProfiles: scala.collection.mutable.Map[String, UserProfile] =
     scala.collection.mutable.Map[String, UserProfile]()

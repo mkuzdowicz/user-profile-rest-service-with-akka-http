@@ -1,7 +1,8 @@
-package com.kuzdowiczm.web.rest.upservice.repository
+package com.kuzdowiczm.web.rest.upservice.repositories.inmemodb
 
 import java.util.UUID
 
+import com.kuzdowiczm.web.rest.upservice.repositories.OrganisationsRepo
 import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
 
 object OrganisationsRepoInMemoImpl extends OrganisationsRepo {

@@ -4,32 +4,39 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
-import com.kuzdowiczm.web.rest.upservice.repository.{OrganisationsRepo, OrganisationsRepoInMemoImpl, UserProfilesRepo, UserProfilesRepoInMemoImpl}
-import com.kuzdowiczm.web.rest.upservice.services.{OrganisationsService, UserProfilesService}
+import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.{OrganisationsRepoInMemoImpl, UserProfilesRepoInMemoImpl}
+import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
+import com.typesafe.config.ConfigFactory
+import org.slf4j.LoggerFactory
 
 import scala.concurrent.duration._
 
 
 object WebApp extends App {
 
-  implicit val system = ActorSystem("user-profiles-service")
-  implicit val materializer = ActorMaterializer()
+  private val cfg = ConfigFactory.load()
+  private val log = LoggerFactory.getLogger(getClass)
+  private val appName = cfg.getString("app.service_name")
 
+  // AKKA http web toolkit dependencies
+  implicit val system = ActorSystem(appName)
+  implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
   implicit val timeout = Timeout(10 seconds)
 
+  // user-profiles-service dependencies
   implicit private val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
   implicit private val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl
 
-  private val usrProfilesService = UserProfilesService.apply
-  private val orgsService = OrganisationsService.apply
-
-  DataInitialiser.init(usrProfilesService, orgsService)
+  DataInitialiser.init
 
   val usrProfServiceCtrlRouter = new UsrProfilesServiceCtrl().route
 
-  Http().bindAndHandle(handler = usrProfServiceCtrlRouter, interface = "localhost", port = 8080) map { binding =>
-    println(s"REST interface bound to ${binding.localAddress}")
+  val host = cfg.getString("app.host")
+  val port = cfg.getInt("app.port")
+
+  Http().bindAndHandle(handler = usrProfServiceCtrlRouter, interface = host, port = port) map { binding =>
+    log.info(s"$appName running on $host:$port")
   } recover { case ex =>
     ex.printStackTrace()
   }

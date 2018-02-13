@@ -1,8 +1,9 @@
-package com.kuzdowiczm.web.rest.upservice.repository
+package com.kuzdowiczm.web.rest.upservice.repositories.inmemodb
 
 import java.util.UUID
 
 import com.kuzdowiczm.web.rest.upservice._
+import com.kuzdowiczm.web.rest.upservice.repositories.UserProfilesRepo
 
 object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
 
@@ -25,6 +26,10 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
 
   def findBy(id: String): Option[UserProfile] = {
     InMemoDB.userProfiles.get(id)
+  }
+
+  def deleteBy(id: String): Boolean = {
+    InMemoDB.userProfiles.remove(id).nonEmpty
   }
 
 }
