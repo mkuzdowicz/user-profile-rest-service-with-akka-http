@@ -36,7 +36,7 @@ object WebApp extends App {
   val port = cfg.getInt("app.port")
 
   Http().bindAndHandle(handler = usrProfServiceCtrlRouter, interface = host, port = port) map { binding =>
-    log.info(s"$appName running on $host:$port")
+    log.info(s"$appName running on ${binding.localAddress}")
   } recover { case ex =>
     ex.printStackTrace()
   }

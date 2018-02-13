@@ -16,7 +16,7 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
   extends Directives with JsonSupport {
 
-  val serviceLinksRes = Map[String, String](
+  val serviceLinksDocs = Map[String, String](
     "HTTP get: /users/<id>" -> "get single user",
     "HTTP delete: /users/<id>" -> "delete single user",
     "HTTP put: /users" -> "update single user (requires json payload)",
@@ -28,7 +28,7 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
   val route =
     pathSingleSlash {
       get {
-        complete(serviceLinksRes)
+        complete(serviceLinksDocs)
       }
     } ~
       pathPrefix("users") {
@@ -48,14 +48,14 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
         } ~
           post {
             entity(as[CreateUserReq]) { createUsrReq =>
-              val nUsrId = usrProfilesService.add(createUsrReq)
-              complete(s"new user created with id: $nUsrId")
+              val newUsrId = usrProfilesService.add(createUsrReq)
+              complete(s"new user created with id: $newUsrId")
             }
           } ~
           put {
             entity(as[CreateUserReq]) { createUsrReq =>
-              val nUsrId = usrProfilesService.add(createUsrReq)
-              complete(s"user updated")
+              val updatedUsrId = usrProfilesService.add(createUsrReq)
+              complete(s"user with id: $updatedUsrId updated")
             }
           }
       }
