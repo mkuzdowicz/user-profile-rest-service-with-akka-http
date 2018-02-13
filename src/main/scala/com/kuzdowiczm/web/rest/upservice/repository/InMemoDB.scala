@@ -10,5 +10,4 @@ private[repository] object InMemoDB {
   val organisations: scala.collection.mutable.Map[String, Organisation] =
     scala.collection.mutable.Map[String, Organisation]()
 
-
 }

@@ -11,12 +11,7 @@ object Application extends App {
   private val usrProfilesService = UserProfilesService.apply
   private val orgsService = OrganisationsService.apply
 
-  orgsService.add(CreateOrgReq(
-    name = "Advice UK",
-    email = "test@email",
-    `type` = "ADVICE_SERVICE",
-    address = Address(postcode = "EC2 67")
-  ))
+  init(orgsService)
 
   val usr1UUID = usrProfilesService.add(
     CreateUserReq(
@@ -34,5 +29,14 @@ object Application extends App {
   val usr1 = usrProfilesService.findBy(usr1UUID)
 
   println(usr1)
+
+  def init(orgsService: OrganisationsService) = {
+    orgsService.add(CreateOrgReq(
+      name = "Advice UK",
+      email = "test@email",
+      `type` = "ADVICE_SERVICE",
+      address = Address(postcode = "EC2 67")
+    ))
+  }
 
 }
