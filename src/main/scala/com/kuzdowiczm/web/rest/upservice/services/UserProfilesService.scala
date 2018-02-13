@@ -16,12 +16,12 @@ class UserProfilesService(implicit private val usrProfilesRepo: UserProfilesRepo
     usrProfilesRepo.createOrUpdateFrom(createUserReq, org)
   }
 
-  def findBy(id: String): Option[UserProfile] = {
-    usrProfilesRepo.findBy(id)
+  def findOneBy(id: String): Option[UserProfile] = {
+    usrProfilesRepo.findOneBy(id)
   }
 
-  def deleteBy(id: String): Option[UserProfile] = {
-    usrProfilesRepo.deleteBy(id)
+  def deleteOneBy(id: String): Option[UserProfile] = {
+    usrProfilesRepo.deleteOneBy(id)
   }
 }
 

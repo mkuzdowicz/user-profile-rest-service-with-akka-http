@@ -6,8 +6,8 @@ trait UserProfilesRepo {
 
   def createOrUpdateFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): Option[UserProfile]
 
-  def findBy(id: String): Option[UserProfile]
+  def findOneBy(id: String): Option[UserProfile]
 
-  def deleteBy(id: String): Option[UserProfile]
+  def deleteOneBy(id: String): Option[UserProfile]
 
 }

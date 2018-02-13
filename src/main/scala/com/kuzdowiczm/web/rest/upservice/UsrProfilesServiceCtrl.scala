@@ -39,12 +39,12 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
       pathPrefix(mainEndpoint) {
         path(Segment) { id =>
           get {
-            usrProfilesService.findBy(id) match {
+            usrProfilesService.findOneBy(id) match {
               case Some(userProfile) => complete(OK, userProfile)
               case None => complete(NotFound, s"there is no user profile with id: $id")
             }
           } ~ delete {
-            usrProfilesService.deleteBy(id) match {
+            usrProfilesService.deleteOneBy(id) match {
               case Some(_) => complete(NoContent)
               case None => complete(NotFound, s"no user founded for id: $id")
             }

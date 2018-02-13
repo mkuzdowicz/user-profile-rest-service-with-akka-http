@@ -40,11 +40,11 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
     Option(updatedUserProfile)
   }
 
-  def findBy(id: String): Option[UserProfile] = {
+  def findOneBy(id: String): Option[UserProfile] = {
     InMemoDB.userProfiles.get(id)
   }
 
-  def deleteBy(id: String): Option[UserProfile] = {
+  def deleteOneBy(id: String): Option[UserProfile] = {
     InMemoDB.userProfiles.remove(id)
   }
 

@@ -14,7 +14,7 @@ object DataInitialiser {
     val usrProfilesService = UserProfilesService.apply
     val orgsService = OrganisationsService.apply
 
-    orgsService.add(CreateOrgReq(
+    orgsService.create(CreateOrgReq(
       name = "Advice UK",
       email = "test@email",
       `type` = "ADVICE_SERVICE",

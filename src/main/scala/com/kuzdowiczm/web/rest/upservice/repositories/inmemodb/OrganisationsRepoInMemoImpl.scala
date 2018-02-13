@@ -7,16 +7,17 @@ import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
 
 object OrganisationsRepoInMemoImpl extends OrganisationsRepo {
 
-  def add(createOrgReq: CreateOrgReq): String = {
+  def create(createOrgReq: CreateOrgReq): Option[Organisation] = {
     val orgUUID = UUID.randomUUID().toString
-    InMemoDB.organisations += createOrgReq.name -> Organisation(
+    val newOrg = Organisation(
       id = orgUUID,
       name = createOrgReq.name,
       email = createOrgReq.email,
       `type` = createOrgReq.`type`,
       address = createOrgReq.address
     )
-    orgUUID
+    InMemoDB.organisations += createOrgReq.name -> newOrg
+    Option(newOrg)
   }
 
   def findOneBy(name: String): Option[Organisation] = {

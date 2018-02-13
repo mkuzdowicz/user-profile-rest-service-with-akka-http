@@ -11,8 +11,8 @@ object OrganisationsService {
 
 class OrganisationsService(implicit private val orgsRepo: OrganisationsRepo) {
 
-  def add(createOrgReq: CreateOrgReq): String = {
-    orgsRepo.add(createOrgReq)
+  def create(createOrgReq: CreateOrgReq): Option[Organisation] = {
+    orgsRepo.create(createOrgReq)
   }
 
   def findOneBy(name: String): Organisation = {

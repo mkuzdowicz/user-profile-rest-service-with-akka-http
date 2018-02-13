@@ -4,7 +4,7 @@ import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
 
 trait OrganisationsRepo {
 
-  def add(createOrgReq: CreateOrgReq): String
+  def create(createOrgReq: CreateOrgReq): Option[Organisation]
 
   def findOneBy(name: String): Option[Organisation]
 
