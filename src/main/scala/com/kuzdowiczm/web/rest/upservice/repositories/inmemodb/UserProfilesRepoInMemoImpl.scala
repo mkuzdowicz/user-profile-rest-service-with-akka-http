@@ -7,10 +7,19 @@ import com.kuzdowiczm.web.rest.upservice.repositories.UserProfilesRepo
 
 object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
 
-  def createOneFrom(createUserReq: CreateUserReq, org: Organisation): String = {
+  def createOrUpdateFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): UserProfile = {
+    if (createUserReq.id.isEmpty) createNewFrom(createUserReq, org) else update(createUserReq, org)
+  }
 
+  private def createNewFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): UserProfile = {
     val uuid = UUID.randomUUID().toString
-    InMemoDB.userProfiles += uuid -> UserProfile(
+    val newUserProfile = mapToUserProfile(uuid, createUserReq, org)
+    InMemoDB.userProfiles += uuid -> newUserProfile
+    newUserProfile
+  }
+
+  private def mapToUserProfile(uuid: String, createUserReq: CreateOrUpdateUserReq, org: Organisation): UserProfile ={
+    val newUserProfile = UserProfile(
       id = uuid,
       firstname = createUserReq.firstname,
       lastname = createUserReq.lastname,
@@ -21,15 +30,21 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
       organisation = org,
       address = createUserReq.address
     )
-    uuid
+    newUserProfile
+  }
+
+  private def update(createUserReq: CreateOrUpdateUserReq, org: Organisation): UserProfile = {
+    val updatedUserProfile = mapToUserProfile(createUserReq.id, createUserReq, org)
+    InMemoDB.userProfiles += createUserReq.id -> updatedUserProfile
+    updatedUserProfile
   }
 
   def findBy(id: String): Option[UserProfile] = {
     InMemoDB.userProfiles.get(id)
   }
 
-  def deleteBy(id: String): Boolean = {
-    InMemoDB.userProfiles.remove(id).nonEmpty
+  def deleteBy(id: String): Option[UserProfile] = {
+    InMemoDB.userProfiles.remove(id)
   }
 
 }

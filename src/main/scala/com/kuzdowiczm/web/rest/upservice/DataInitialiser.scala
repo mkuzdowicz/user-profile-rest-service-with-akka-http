@@ -21,8 +21,8 @@ object DataInitialiser {
       address = Address(postcode = "EC2 67")
     ))
 
-    val usr1UUID = usrProfilesService.add(
-      CreateUserReq(
+    val usr1 = usrProfilesService.createOrUpdate(
+      CreateOrUpdateUserReq(
         firstname = "Martin",
         lastname = "Kuzdowicz",
         email = "martin.kuzdowicz@gmail.com",
@@ -34,7 +34,7 @@ object DataInitialiser {
       )
     )
 
-    log.info(s"usr1UUID => $usr1UUID")
+    log.info(s"usr1 => ${usr1.id}")
 
   }
 
