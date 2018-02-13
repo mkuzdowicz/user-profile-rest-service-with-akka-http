@@ -1,14 +1,16 @@
 package com.kuzdowiczm.web.rest.upservice
 
-import com.kuzdowiczm.web.rest.upservice.db.{OrganisationsRepoInMemoImpl, UserProfilesRepo, UserProfilesRepoInMemoImpl}
+import com.kuzdowiczm.web.rest.upservice.db.{OrganisationsRepo, OrganisationsRepoInMemoImpl, UserProfilesRepo, UserProfilesRepoInMemoImpl}
 
 object Application extends App {
 
   implicit private val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
+  implicit private val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl
 
   private val usrProfilesService = UserProfilesService.apply
+  private val orgsService = OrganisationsService.apply
 
-  OrganisationsRepoInMemoImpl.add(CreateOrgReq(
+  orgsService.add(CreateOrgReq(
     name = "Advice UK",
     email = "test@email",
     `type` = "ADVICE_SERVICE",

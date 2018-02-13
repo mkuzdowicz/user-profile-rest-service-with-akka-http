@@ -1,10 +1,14 @@
 package com.kuzdowiczm.web.rest.upservice
 
-import com.kuzdowiczm.web.rest.upservice.db.{OrganisationsRepo, OrganisationsRepoInMemoImpl}
+import com.kuzdowiczm.web.rest.upservice.db.OrganisationsRepo
 
 object OrganisationsService {
+  def apply(implicit orgsRepo: OrganisationsRepo): OrganisationsService = {
+    new OrganisationsService()
+  }
+}
 
-  private val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl
+class OrganisationsService(implicit private val orgsRepo: OrganisationsRepo) {
 
   def add(createOrgReq: CreateOrgReq): String = {
     orgsRepo.add(createOrgReq)
