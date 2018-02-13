@@ -8,7 +8,7 @@ object DataInitialiser {
 
   private val log = LoggerFactory.getLogger(getClass)
 
-  def init(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo) = {
+  def init(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): String = {
     log.info(s"creating initial data")
 
     val usrProfilesService = UserProfilesService.apply
@@ -36,6 +36,7 @@ object DataInitialiser {
 
     log.info(s"usr1 => ${usr1.id}")
 
+    usr1.id
   }
 
 }
