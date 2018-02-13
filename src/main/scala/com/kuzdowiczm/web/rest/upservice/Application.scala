@@ -1,8 +1,12 @@
 package com.kuzdowiczm.web.rest.upservice
 
-import com.kuzdowiczm.web.rest.upservice.db.OrganisationsRepoInMemoImpl
+import com.kuzdowiczm.web.rest.upservice.db.{OrganisationsRepoInMemoImpl, UserProfilesRepo, UserProfilesRepoInMemoImpl}
 
 object Application extends App {
+
+  implicit private val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
+
+  private val usrProfilesService = UserProfilesService.apply
 
   OrganisationsRepoInMemoImpl.add(CreateOrgReq(
     name = "Advice UK",
@@ -11,7 +15,7 @@ object Application extends App {
     address = Address(postcode = "EC2 67")
   ))
 
-  val usr1UUID = UserProfilesService.add(
+  val usr1UUID = usrProfilesService.add(
     CreateUserReq(
       firstname = "Martin",
       lastname = "Kuzdowicz",
@@ -24,7 +28,7 @@ object Application extends App {
     )
   )
 
-  val usr1 = UserProfilesService.findBy(usr1UUID)
+  val usr1 = usrProfilesService.findBy(usr1UUID)
 
   println(usr1)
 
