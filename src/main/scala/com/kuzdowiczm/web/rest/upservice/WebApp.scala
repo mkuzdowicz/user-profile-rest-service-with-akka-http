@@ -24,39 +24,14 @@ object WebApp extends App {
   private val usrProfilesService = UserProfilesService.apply
   private val orgsService = OrganisationsService.apply
 
-  init(orgsService)
+  DataInitialiser.init(usrProfilesService, orgsService)
 
-  val usr1UUID = usrProfilesService.add(
-    CreateUserReq(
-      firstname = "Martin",
-      lastname = "Kuzdowicz",
-      email = "martin.kuzdowicz@gmail.com",
-      salutation = "Mr",
-      telephone = "+44 7731 671016",
-      `type` = "barrister",
-      orgName = "Advice UK",
-      address = Address(postcode = "E14 9EP")
-    )
-  )
+  val usrProfServiceCtrlRouter = new UsrProfilesServiceCtrl().route
 
-  val usr1 = usrProfilesService.findBy(usr1UUID)
-
-  println(usr1)
-
-  def init(orgsService: OrganisationsService) = {
-    orgsService.add(CreateOrgReq(
-      name = "Advice UK",
-      email = "test@email",
-      `type` = "ADVICE_SERVICE",
-      address = Address(postcode = "EC2 67")
-    ))
-  }
-
-  val ctrl = new UsrProfilesServiceCtrl()
-
-  Http().bindAndHandle(handler = ctrl.route, interface = "localhost", port = 8080) map { binding =>
+  Http().bindAndHandle(handler = usrProfServiceCtrlRouter, interface = "localhost", port = 8080) map { binding =>
     println(s"REST interface bound to ${binding.localAddress}")
   } recover { case ex =>
+    ex.printStackTrace()
   }
 
 }

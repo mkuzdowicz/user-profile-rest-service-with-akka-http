@@ -15,22 +15,30 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
   extends Directives with JsonSupport {
 
+  val serviceLinksRes = Map[String, String](
+    "HTTP get: /users/<id>" -> "get single user",
+    "HTTP delete: /users/<id>" -> "delete single user",
+    "HTTP put: /users" -> "update single user (requires json payload)",
+    "HTTP post: /users" -> "create single user (requires json payload)"
+  )
+
   private val usrProfilesService = UserProfilesService.apply
 
-  val route = pathPrefix("users") {
-    pathEnd {
+  val route =
+    pathSingleSlash {
       get {
-        complete("Welcome to user-profiles-service")
+        complete(serviceLinksRes)
       }
     } ~
-      path(Segment) { id =>
-        get {
-          complete {
-            val res = usrProfilesService.findBy(id)
-            res
+      pathPrefix("users") {
+        path(Segment) { id =>
+          get {
+            complete {
+              val res = usrProfilesService.findBy(id)
+              res
+            }
           }
         }
       }
-  }
 
 }
