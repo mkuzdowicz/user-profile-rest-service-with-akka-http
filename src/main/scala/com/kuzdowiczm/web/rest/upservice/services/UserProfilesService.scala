@@ -1,6 +1,7 @@
-package com.kuzdowiczm.web.rest.upservice
+package com.kuzdowiczm.web.rest.upservice.services
 
-import com.kuzdowiczm.web.rest.upservice.db.{OrganisationsRepo, UserProfilesRepo}
+import com.kuzdowiczm.web.rest.upservice.repository.{OrganisationsRepo, UserProfilesRepo}
+import com.kuzdowiczm.web.rest.upservice.{CreateUserReq, UserProfile}
 
 object UserProfilesService {
   def apply(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): UserProfilesService = {

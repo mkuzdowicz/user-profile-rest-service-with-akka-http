@@ -1,4 +1,4 @@
-package com.kuzdowiczm.web.rest.upservice.db
+package com.kuzdowiczm.web.rest.upservice.repository
 
 import java.util.UUID
 

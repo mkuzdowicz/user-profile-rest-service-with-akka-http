@@ -1,6 +1,7 @@
 package com.kuzdowiczm.web.rest.upservice
 
-import com.kuzdowiczm.web.rest.upservice.db.{OrganisationsRepo, OrganisationsRepoInMemoImpl, UserProfilesRepo, UserProfilesRepoInMemoImpl}
+import com.kuzdowiczm.web.rest.upservice.repository.{OrganisationsRepo, OrganisationsRepoInMemoImpl, UserProfilesRepo, UserProfilesRepoInMemoImpl}
+import com.kuzdowiczm.web.rest.upservice.services.{OrganisationsService, UserProfilesService}
 
 object Application extends App {
 
