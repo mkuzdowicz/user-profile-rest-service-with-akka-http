@@ -29,9 +29,17 @@ class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAf
 
   "user profile service" should {
 
+    s"return docs like response for /$mainEndpoint endpoint" in {
+      Get(s"/$mainEndpoint/") ~> usrProfServiceCtrlRouter ~> check {
+        status shouldEqual OK
+        contentType shouldEqual `application/json`
+      }
+    }
+
     s"return error message when http get on /$usersPath/<non_existing_user_id> endpoint is hitted" in {
       val nonExitingUserID = "fake-id-1456-ofp"
-      Get(s"/$usersPath/$nonExitingUserID") ~> usrProfServiceCtrlRouter ~> check {
+      val endpoint = s"$usersPath/$nonExitingUserID"
+      Get(endpoint) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual NotFound
         contentType shouldEqual `text/plain(UTF-8)`
         responseAs[String] shouldEqual ifNoUserProfileFor(nonExitingUserID)
@@ -40,7 +48,8 @@ class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAf
 
     s"return user profile when http get on /$usersPath/<existing_user_id> endpoint is hitted" in {
       val existingUser = DataInitHelper.initOneOrgAndOneUser
-      Get(s"/$usersPath/${existingUser.id}") ~> usrProfServiceCtrlRouter ~> check {
+      val endpoint = s"$usersPath/${existingUser.id}"
+      Get(endpoint) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual OK
         contentType shouldEqual `application/json`
         responseAs[UserProfile] shouldEqual existingUser
@@ -49,18 +58,12 @@ class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAf
 
     s"delete user when http delete methid on /$usersPath/<existing_user_id>  endpoint is hitted" in {
       val existingUser = DataInitHelper.initOneOrgAndOneUser
+      val endpoint = s"$usersPath/${existingUser.id}"
       usrProfilesRepo.findAll().size shouldBe 1
-      Delete(s"/$usersPath/${existingUser.id}") ~> usrProfServiceCtrlRouter ~> check {
+      Delete(endpoint) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual NoContent
       }
       usrProfilesRepo.findAll().size shouldBe 0
-    }
-
-    s"return docs like response for /$mainEndpoint endpoint" in {
-      Get(s"/$mainEndpoint/") ~> usrProfServiceCtrlRouter ~> check {
-        status shouldEqual OK
-        contentType shouldEqual `application/json`
-      }
     }
   }
 

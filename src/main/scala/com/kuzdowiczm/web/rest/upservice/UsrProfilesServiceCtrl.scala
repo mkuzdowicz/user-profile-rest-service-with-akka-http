@@ -28,37 +28,39 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
 
   val route =
     pathPrefix(mainEndpoint) {
-      get {
-        complete(OK, SERVICE_LINKS_MAP)
-      }
-    } ~
-      pathPrefix(usersEndpoint) {
-        path(Segment) { id =>
-          get {
-            usrProfilesService.findOneBy(id) match {
-              case Some(userProfile) => complete(OK, userProfile)
-              case None => complete(NotFound, ifNoUserProfileFor(id))
-            }
-          } ~ delete {
-            usrProfilesService.deleteOneBy(id) match {
-              case Some(_) => complete(NoContent)
-              case None => complete(NotFound, ifNoUserProfileFor(id))
-            }
-          }
-        } ~
-          post {
-            entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
-              val newUsr = usrProfilesService.createOrUpdate(createUsrReq).get
-              complete(Created, ifNewUserCreatedWith(newUsr.id))
-            }
-          } ~
-          put {
-            entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
-              usrProfilesService.createOrUpdate(updateUsrReq) match {
-                case Some(usr) => complete(OK, ifUserUserUpdatedWith(usr.id))
-                case None => complete(NotFound, ifNoUserProfileFor(updateUsrReq.id))
+      pathSingleSlash {
+        get {
+          complete(OK, SERVICE_LINKS_MAP)
+        }
+      } ~
+        pathPrefix(usersEndpoint) {
+          path(Segment) { id =>
+            get {
+              usrProfilesService.findOneBy(id) match {
+                case Some(userProfile) => complete(OK, userProfile)
+                case None => complete(NotFound, ifNoUserProfileFor(id))
+              }
+            } ~ delete {
+              usrProfilesService.deleteOneBy(id) match {
+                case Some(_) => complete(NoContent)
+                case None => complete(NotFound, ifNoUserProfileFor(id))
               }
             }
-          }
-      }
+          } ~
+            post {
+              entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
+                val newUsr = usrProfilesService.createOrUpdate(createUsrReq).get
+                complete(Created, ifNewUserCreatedWith(newUsr.id))
+              }
+            } ~
+            put {
+              entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
+                usrProfilesService.createOrUpdate(updateUsrReq) match {
+                  case Some(usr) => complete(OK, ifUserUserUpdatedWith(usr.id))
+                  case None => complete(NotFound, ifNoUserProfileFor(updateUsrReq.id))
+                }
+              }
+            }
+        }
+    }
 }
