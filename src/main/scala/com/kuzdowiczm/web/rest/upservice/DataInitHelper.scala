@@ -4,22 +4,16 @@ import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserPr
 import com.kuzdowiczm.web.rest.upservice.services.{OrganisationsService, UserProfilesService}
 import org.slf4j.LoggerFactory
 
-object DataInitialiser {
+object DataInitHelper {
 
   private val log = LoggerFactory.getLogger(getClass)
 
-  def init(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): String = {
+  def initOneOrgAndOneUser(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): String = {
     log.info(s"creating initial data")
 
     val usrProfilesService = UserProfilesService.apply
-    val orgsService = OrganisationsService.apply
 
-    orgsService.create(CreateOrgReq(
-      name = "Advice UK",
-      email = "test@email",
-      `type` = "ADVICE_SERVICE",
-      address = Address(postcode = "EC2 67")
-    ))
+    initOneOrg
 
     val usr1 = usrProfilesService.createOrUpdate(
       CreateOrUpdateUserReq(
@@ -37,6 +31,17 @@ object DataInitialiser {
     log.info(s"usr1 => ${usr1.id}")
 
     usr1.id
+  }
+
+  def initOneOrg(implicit orgsRepo: OrganisationsRepo): String = {
+    val orgsService = OrganisationsService.apply
+
+    orgsService.create(CreateOrgReq(
+      name = "Advice UK",
+      email = "test@email",
+      `type` = "ADVICE_SERVICE",
+      address = Address(postcode = "EC2 67")
+    )).get.name
   }
 
 }

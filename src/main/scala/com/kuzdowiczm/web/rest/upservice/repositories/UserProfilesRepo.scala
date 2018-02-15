@@ -10,4 +10,6 @@ trait UserProfilesRepo {
 
   def deleteOneBy(id: String): Option[UserProfile]
 
+  def findAll(): List[UserProfile]
+
 }

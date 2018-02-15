@@ -18,6 +18,11 @@
     
 ### start server form command line
 
-    ---
+    sbt "runMain com.kuzdowiczm.web.rest.upservice.WebApp"
+    
+### deployment
+
+    App can be deployed as a docker container for example to AWS ECS
+    In this example the server is embeded in the service as a Akka-HTTP application
     
 ### Future perspectives / Limitations

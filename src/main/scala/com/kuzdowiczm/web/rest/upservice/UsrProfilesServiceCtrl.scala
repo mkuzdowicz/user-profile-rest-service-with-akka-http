@@ -3,6 +3,7 @@ package com.kuzdowiczm.web.rest.upservice
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
 import akka.http.scaladsl.server.Directives
+import com.kuzdowiczm.web.rest.upservice.ErrorMessagesHelper.{ifNewUserCreatedWith, ifNoUserProfileFor, ifUserUserUpdatedWith}
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import com.typesafe.config.ConfigFactory
@@ -41,26 +42,26 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
           get {
             usrProfilesService.findOneBy(id) match {
               case Some(userProfile) => complete(OK, userProfile)
-              case None => complete(NotFound, s"there is no user profile with id: $id")
+              case None => complete(NotFound, ifNoUserProfileFor(id))
             }
           } ~ delete {
             usrProfilesService.deleteOneBy(id) match {
               case Some(_) => complete(NoContent)
-              case None => complete(NotFound, s"no user founded for id: $id")
+              case None => complete(NotFound, ifNoUserProfileFor(id))
             }
           }
         } ~
           post {
             entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
               val newUsr = usrProfilesService.createOrUpdate(createUsrReq).get
-              complete(Created, s"new user created with id: ${newUsr.id}")
+              complete(Created, ifNewUserCreatedWith(newUsr.id))
             }
           } ~
           put {
             entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
               usrProfilesService.createOrUpdate(updateUsrReq) match {
-                case Some(usr) => complete(OK, s"user with id: ${usr.id} updated")
-                case None => complete(NotFound, s"there is no user profile with id: ${updateUsrReq.id}")
+                case Some(usr) => complete(OK, ifUserUserUpdatedWith(usr.id))
+                case None => complete(NotFound, ifNoUserProfileFor(updateUsrReq.id))
               }
             }
           }

@@ -30,7 +30,7 @@ object WebApp extends App {
   implicit private val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
   implicit private val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl
 
-  DataInitialiser.init
+  DataInitHelper.initOneOrgAndOneUser
 
   val usrProfServiceCtrlRouter = new UsrProfilesServiceCtrl().route
 
