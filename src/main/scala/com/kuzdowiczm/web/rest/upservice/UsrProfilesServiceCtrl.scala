@@ -10,7 +10,7 @@ import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import com.typesafe.config.ConfigFactory
 import spray.json.DefaultJsonProtocol
 
-trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
+trait UsrProfilesServiceCtrlJsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
   implicit val addressFormat = jsonFormat1(Address)
   implicit val organisationFormat = jsonFormat5(Organisation)
   implicit val usrProfileFormat = jsonFormat9(UserProfile)
@@ -18,7 +18,7 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 }
 
 class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
-  extends Directives with JsonSupport {
+  extends Directives with UsrProfilesServiceCtrlJsonSupport {
 
   private val cfg = ConfigFactory.load()
   val mainEndpoint = cfg.getString("app.service_main_endpoint")

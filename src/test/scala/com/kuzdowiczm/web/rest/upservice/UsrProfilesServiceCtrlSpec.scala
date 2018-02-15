@@ -12,7 +12,7 @@ import com.kuzdowiczm.web.rest.upservice.InMemoDBTestUtils.clearInMemoDB
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.InMemoDB
 
-class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAfterEach with ScalatestRouteTest {
+class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAfterEach with ScalatestRouteTest with UsrProfilesServiceCtrlJsonSupport {
 
   implicit private val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
   implicit private val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl
@@ -29,7 +29,7 @@ class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAf
 
   "user profile service" should {
 
-    s"return error message user when http get on /$usersPath/<non_existing_user_id> endpoint is hitted" in {
+    s"return error message when http get on /$usersPath/<non_existing_user_id> endpoint is hitted" in {
       val nonExitingUserID = "fake-id-1456-ofp"
       Get(s"/$usersPath/$nonExitingUserID") ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual NotFound
@@ -38,10 +38,19 @@ class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAf
       }
     }
 
+    s"return user profile when http get on /$usersPath/<existing_user_id> endpoint is hitted" in {
+      val existingUser = DataInitHelper.initOneOrgAndOneUser
+      Get(s"/$usersPath/${existingUser.id}") ~> usrProfServiceCtrlRouter ~> check {
+        status shouldEqual OK
+        contentType shouldEqual `application/json`
+        responseAs[UserProfile] shouldEqual existingUser
+      }
+    }
+
     s"delete user when http delete methid on /$usersPath/<existing_user_id>  endpoint is hitted" in {
-      val existingUserId = DataInitHelper.initOneOrgAndOneUser
+      val existingUser = DataInitHelper.initOneOrgAndOneUser
       usrProfilesRepo.findAll().size shouldBe 1
-      Delete(s"/$usersPath/$existingUserId") ~> usrProfServiceCtrlRouter ~> check {
+      Delete(s"/$usersPath/${existingUser.id}") ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual NoContent
       }
       usrProfilesRepo.findAll().size shouldBe 0
