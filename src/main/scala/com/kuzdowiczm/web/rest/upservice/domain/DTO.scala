@@ -1,5 +1,4 @@
-package com.kuzdowiczm.web.rest.upservice
-
+package com.kuzdowiczm.web.rest.upservice.domain
 
 sealed case class CreateOrgReq(
                                 name: String,

@@ -1,6 +1,6 @@
 package com.kuzdowiczm.web.rest.upservice.repositories.inmemodb
 
-import com.kuzdowiczm.web.rest.upservice.{Organisation, UserProfile}
+import com.kuzdowiczm.web.rest.upservice.domain.{Organisation, UserProfile}
 
 object InMemoDB {
 

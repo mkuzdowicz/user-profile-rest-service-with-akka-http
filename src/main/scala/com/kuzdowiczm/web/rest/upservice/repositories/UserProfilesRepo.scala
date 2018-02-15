@@ -1,6 +1,6 @@
 package com.kuzdowiczm.web.rest.upservice.repositories
 
-import com.kuzdowiczm.web.rest.upservice.{CreateOrUpdateUserReq, Organisation, UserProfile}
+import com.kuzdowiczm.web.rest.upservice.domain.{CreateOrUpdateUserReq, Organisation, UserProfile}
 
 trait UserProfilesRepo {
 

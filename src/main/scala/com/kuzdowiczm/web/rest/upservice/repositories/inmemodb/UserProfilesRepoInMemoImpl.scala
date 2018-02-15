@@ -2,7 +2,7 @@ package com.kuzdowiczm.web.rest.upservice.repositories.inmemodb
 
 import java.util.UUID
 
-import com.kuzdowiczm.web.rest.upservice._
+import com.kuzdowiczm.web.rest.upservice.domain.{CreateOrUpdateUserReq, Organisation, UserProfile}
 import com.kuzdowiczm.web.rest.upservice.repositories.UserProfilesRepo
 
 object UserProfilesRepoInMemoImpl extends UserProfilesRepo {

@@ -1,18 +1,17 @@
 package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.model.ContentTypes.{`application/json`, `text/plain(UTF-8)`}
-import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
+import akka.http.scaladsl.model.StatusCodes.{NoContent, NotFound, OK}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.{OrganisationsRepoInMemoImpl, UserProfilesRepoInMemoImpl}
-import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
-import com.kuzdowiczm.web.rest.upservice.helpers.ErrorMessagesHelper.{ifNewUserCreatedWith, ifNoUserProfileFor, ifUserUserUpdatedWith}
-import com.typesafe.config.ConfigFactory
-import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
 import com.kuzdowiczm.web.rest.upservice.InMemoDBTestUtils.clearInMemoDB
+import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
-import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.InMemoDB
+import com.kuzdowiczm.web.rest.upservice.helpers.ErrorMessagesHelper.ifNoUserProfileFor
+import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.{InMemoDB, OrganisationsRepoInMemoImpl, UserProfilesRepoInMemoImpl}
+import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
+import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
 
-class UsrProfilesServiceCtrlSpec extends WordSpec with Matchers with BeforeAndAfterEach with ScalatestRouteTest with UsrProfilesServiceCtrlJsonSupport {
+class UserProfilesServiceControllerSpec extends WordSpec with Matchers with BeforeAndAfterEach with ScalatestRouteTest with UsrProfilesServiceCtrlJsonSupport {
 
   implicit private val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
   implicit private val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl

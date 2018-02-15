@@ -3,7 +3,8 @@ package com.kuzdowiczm.web.rest.upservice
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
 import akka.http.scaladsl.server.Directives
-import com.kuzdowiczm.web.rest.upservice.DocsResponse.SERVICE_LINKS_MAP
+import com.kuzdowiczm.web.rest.upservice.domain.{Address, CreateOrUpdateUserReq, Organisation, UserProfile}
+import com.kuzdowiczm.web.rest.upservice.helpers.DocsResponse.SERVICE_LINKS_MAP
 import com.kuzdowiczm.web.rest.upservice.helpers.ErrorMessagesHelper.{ifNewUserCreatedWith, ifNoUserProfileFor, ifUserUserUpdatedWith}
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService

@@ -1,7 +1,7 @@
 package com.kuzdowiczm.web.rest.upservice.services
 
+import com.kuzdowiczm.web.rest.upservice.domain.{CreateOrgReq, Organisation}
 import com.kuzdowiczm.web.rest.upservice.repositories.OrganisationsRepo
-import com.kuzdowiczm.web.rest.upservice.{CreateOrgReq, Organisation}
 
 object OrganisationsService {
   def apply(implicit orgsRepo: OrganisationsRepo): OrganisationsService = {
