@@ -3,7 +3,8 @@ package com.kuzdowiczm.web.rest.upservice
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
 import akka.http.scaladsl.server.Directives
-import com.kuzdowiczm.web.rest.upservice.ErrorMessagesHelper.{ifNewUserCreatedWith, ifNoUserProfileFor, ifUserUserUpdatedWith}
+import com.kuzdowiczm.web.rest.upservice.DocsResponse.SERVICE_LINKS_MAP
+import com.kuzdowiczm.web.rest.upservice.helpers.ErrorMessagesHelper.{ifNewUserCreatedWith, ifNoUserProfileFor, ifUserUserUpdatedWith}
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import com.typesafe.config.ConfigFactory
@@ -19,25 +20,19 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
   extends Directives with JsonSupport {
 
-  private val serviceLinksDocs = Map[String, String](
-    "HTTP get: /users/<id>" -> "get single user",
-    "HTTP delete: /users/<id>" -> "delete single user",
-    "HTTP put: /users" -> "update single user (requires json payload)",
-    "HTTP post: /users" -> "create single user (requires json payload)"
-  )
-
   private val cfg = ConfigFactory.load()
-  private val mainEndpoint = cfg.getString("app.service_main_endpoint")
+  val mainEndpoint = cfg.getString("app.service_main_endpoint")
+  val usersEndpoint = cfg.getString("app.users_endpoint")
 
   private val usrProfilesService = UserProfilesService.apply
 
   val route =
-    pathSingleSlash {
+    pathPrefix(mainEndpoint) {
       get {
-        complete(OK, serviceLinksDocs)
+        complete(OK, SERVICE_LINKS_MAP)
       }
     } ~
-      pathPrefix(mainEndpoint) {
+      pathPrefix(usersEndpoint) {
         path(Segment) { id =>
           get {
             usrProfilesService.findOneBy(id) match {
@@ -66,5 +61,4 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
             }
           }
       }
-
 }

@@ -1,4 +1,4 @@
-package com.kuzdowiczm.web.rest.upservice
+package com.kuzdowiczm.web.rest.upservice.helpers
 
 object ErrorMessagesHelper {
 

@@ -18,7 +18,7 @@
     
 ### start server form command line
 
-    sbt "runMain com.kuzdowiczm.web.rest.upservice.WebApp"
+    sbt "runMain com.kuzdowiczm.web.rest.upservice.Application"
     
 ### deployment
 

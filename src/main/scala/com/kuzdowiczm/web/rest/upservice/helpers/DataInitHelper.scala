@@ -1,7 +1,8 @@
-package com.kuzdowiczm.web.rest.upservice
+package com.kuzdowiczm.web.rest.upservice.helpers
 
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.{OrganisationsService, UserProfilesService}
+import com.kuzdowiczm.web.rest.upservice.{Address, CreateOrUpdateUserReq, CreateOrgReq}
 import org.slf4j.LoggerFactory
 
 object DataInitHelper {

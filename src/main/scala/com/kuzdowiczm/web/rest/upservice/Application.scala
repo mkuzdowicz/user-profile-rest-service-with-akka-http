@@ -10,11 +10,12 @@ import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserPr
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
 import akka.http.scaladsl.server.directives.DebuggingDirectives
+import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
 import scala.concurrent.duration._
 
 
-object WebApp extends App {
+object Application extends App {
 
   private val cfg = ConfigFactory.load()
   private val log = LoggerFactory.getLogger(getClass)
