@@ -58,7 +58,7 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
               entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
                 usrProfilesService.createOrUpdate(updateUsrReq) match {
                   case Some(updatedUsr) => complete(OK, updatedUsr)
-                  case None => complete(NotFound, ifNoUserProfileFor(updateUsrReq.id))
+                  case None => complete(NotFound, ifNoUserProfileFor(updateUsrReq.id.get))
                 }
               }
             }

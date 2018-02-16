@@ -8,7 +8,7 @@ sealed case class CreateOrgReq(
                               )
 
 sealed case class CreateOrUpdateUserReq(
-                                         id: String = "",
+                                         id: Option[String],
                                          firstname: String,
                                          lastname: String,
                                          email: String,
