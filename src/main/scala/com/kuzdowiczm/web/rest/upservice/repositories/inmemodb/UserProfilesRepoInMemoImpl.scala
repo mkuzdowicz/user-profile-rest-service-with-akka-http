@@ -55,8 +55,4 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
     InMemoDB.userProfiles.remove(id)
   }
 
-  def findAll(): List[UserProfile] = {
-    InMemoDB.userProfiles.values.toList
-  }
-
 }
