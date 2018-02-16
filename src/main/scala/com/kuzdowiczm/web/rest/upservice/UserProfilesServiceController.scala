@@ -51,7 +51,7 @@ class UsrProfilesServiceCtrl(implicit private val usrProfilesRepo: UserProfilesR
             post {
               entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
                 val newUsr = usrProfilesService.createOrUpdate(createUsrReq).get
-                complete(Created, ifNewUserCreatedWith(newUsr.id))
+                complete(Created, newUsr)
               }
             } ~
             put {

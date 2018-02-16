@@ -1,8 +1,10 @@
 package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.model.ContentTypes.{`application/json`, `text/plain(UTF-8)`}
-import akka.http.scaladsl.model.StatusCodes.{NoContent, NotFound, OK}
+import akka.http.scaladsl.model.HttpEntity
+import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK, BadRequest}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+import akka.util.ByteString
 import com.kuzdowiczm.web.rest.upservice.InMemoDBTestUtils.clearInMemoDB
 import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
@@ -28,14 +30,14 @@ class UserProfilesServiceControllerSpec extends WordSpec with Matchers with Befo
 
   "user profile service" should {
 
-    s"return docs like response for /$mainEndpoint endpoint" in {
+    s"return docs like response when http GET on /$mainEndpoint endpoint" in {
       Get(s"/$mainEndpoint/") ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual OK
         contentType shouldEqual `application/json`
       }
     }
 
-    s"return error message when http get on /$usersPath/<non_existing_user_id> endpoint is hitted" in {
+    s"return error message when http GET on /$usersPath/<non_existing_user_id> endpoint is hitted" in {
       val nonExitingUserID = "fake-id-1456-ofp"
       val endpoint = s"$usersPath/$nonExitingUserID"
       Get(endpoint) ~> usrProfServiceCtrlRouter ~> check {
@@ -45,7 +47,7 @@ class UserProfilesServiceControllerSpec extends WordSpec with Matchers with Befo
       }
     }
 
-    s"return user profile when http get on /$usersPath/<existing_user_id> endpoint is hitted" in {
+    s"return user profile when http GET on /$usersPath/<existing_user_id> endpoint is hitted" in {
       val existingUser = DataInitHelper.initOneOrgAndOneUser
       val endpoint = s"$usersPath/${existingUser.id}"
       Get(endpoint) ~> usrProfServiceCtrlRouter ~> check {
@@ -55,7 +57,36 @@ class UserProfilesServiceControllerSpec extends WordSpec with Matchers with Befo
       }
     }
 
-    s"delete user when http delete methid on /$usersPath/<existing_user_id>  endpoint is hitted" in {
+    s"create user profile when http POST on /$usersPath endpoint is hitted" in {
+
+      val orgName = DataInitHelper.initOneOrg
+
+      val jsonRequest = ByteString(
+        s"""
+           |{
+           |  "id": "",
+           |  "firstname": "testFirstname",
+           |  "lastname": "testLastname",
+           |  "email": "test@gmail.com",
+           |  "salutation": "Mr",
+           |  "telephone": "+11 11 111111",
+           |  "type": "barrister",
+           |  "orgName": "$orgName",
+           |  "address": { "postcode": "E00 00P" }
+           |}
+        """.stripMargin)
+
+      val endpoint = s"$usersPath"
+      Post(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
+        status shouldEqual Created
+//        contentType shouldEqual `application/json`
+        responseAs[UserProfile].firstname shouldEqual "testFirstname"
+        responseAs[UserProfile].lastname shouldEqual "testLastname"
+        responseAs[UserProfile].id.nonEmpty shouldBe true
+      }
+    }
+
+    s"delete user when http DELETE on /$usersPath/<existing_user_id>  endpoint is hitted" in {
       val existingUser = DataInitHelper.initOneOrgAndOneUser
       val endpoint = s"$usersPath/${existingUser.id}"
       usrProfilesRepo.findAll().size shouldBe 1
