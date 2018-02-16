@@ -20,12 +20,12 @@ object DataInitHelper {
       CreateOrUpdateUserReq(
         firstname = "Martin",
         lastname = "Kuzdowicz",
-        email = "martin.kuzdowicz@gmail.com",
+        email = "test@gmail.com",
         salutation = "Mr",
-        telephone = "+44 7731 671016",
+        telephone = "+44 1111 000000",
         `type` = "barrister",
         orgName = "Advice UK",
-        address = Address(postcode = "E14 9EP")
+        address = Address(postcode = "E00 00P")
       )
     ).get
 

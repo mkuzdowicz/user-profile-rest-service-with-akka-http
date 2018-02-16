@@ -1,11 +1,10 @@
 package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
+import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives
 import com.kuzdowiczm.web.rest.upservice.domain._
 import com.kuzdowiczm.web.rest.upservice.helpers.DocsResponse.SERVICE_LINKS_MAP
-import com.kuzdowiczm.web.rest.upservice.helpers.ResponseMessagesHelper.ifNoUserProfileFor
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import com.typesafe.config.ConfigFactory
@@ -46,26 +45,28 @@ class UserProfilesServiceController(implicit private val usrProfilesRepo: UserPr
             get {
               usrProfilesService.findOneBy(id) match {
                 case Some(userProfile) => complete(OK, userProfile)
-                case None => complete(NotFound, ResponseResource(msg = Option(ifNoUserProfileFor(id))))
+                case None => complete(NotFound)
               }
             } ~ delete {
               usrProfilesService.deleteOneBy(id) match {
                 case Some(_) => complete(NoContent)
-                case None => complete(NotFound, ResponseResource(msg = Option(ifNoUserProfileFor(id))))
+                case None => complete(NotFound)
               }
             }
           } ~
             post {
               entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
-                val newUsr = usrProfilesService.createOrUpdate(createUsrReq).get
-                complete(Created, newUsr)
+                usrProfilesService.createOrUpdate(createUsrReq) match {
+                  case Some(newUsr) => complete(Created, newUsr)
+                  case None => complete(Conflict)
+                }
               }
             } ~
             put {
               entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
                 usrProfilesService.createOrUpdate(updateUsrReq) match {
                   case Some(updatedUsr) => complete(OK, updatedUsr)
-                  case None => complete(NotFound, ResponseResource(msg = Option(ifNoUserProfileFor(updateUsrReq.id.get))))
+                  case None => complete(NotFound)
                 }
               }
             }
