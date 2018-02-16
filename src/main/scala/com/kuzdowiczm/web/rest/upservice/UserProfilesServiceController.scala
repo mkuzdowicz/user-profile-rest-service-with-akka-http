@@ -45,7 +45,7 @@ class UserProfilesServiceController(implicit private val usrProfilesRepo: UserPr
             get {
               usrProfilesService.findOneBy(id) match {
                 case Some(userProfile) => complete(OK, ResponseResource(userProfile))
-                case None => complete(NotFound)
+                case None => complete(BadRequest)
               }
             } ~ delete {
               usrProfilesService.deleteOneBy(id) match {
