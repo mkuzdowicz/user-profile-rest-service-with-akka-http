@@ -14,7 +14,7 @@ object DataInitHelper {
 
     val usrProfilesService = UserProfilesService.apply
 
-    initOneOrg
+    val orgId = initOneOrg
 
     val usr1 = usrProfilesService.createOrUpdate(
       CreateOrUpdateUserReq(
@@ -24,24 +24,27 @@ object DataInitHelper {
         salutation = "Mr",
         telephone = "+44 1111 000000",
         `type` = "barrister",
-        orgName = "Advice UK",
+        orgId = orgId,
         address = Address(postcode = "E00 00P")
       )
     ).get
 
-    log.info(s"usr1 => ${usr1.id}")
+    log.info(s"usr1 => $usr1")
     usr1
   }
 
   def initOneOrg(implicit orgsRepo: OrganisationsRepo): String = {
     val orgsService = OrganisationsService.apply
 
-    orgsService.create(CreateOrgReq(
+    val org = orgsService.create(CreateOrgReq(
       name = "Advice UK",
       email = "test@email",
       `type` = "ADVICE_SERVICE",
       address = Address(postcode = "EC2 67")
-    )).get.name
+    )).get
+
+    log.info(s"org => $org")
+    org.id
   }
 
 }

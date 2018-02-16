@@ -24,7 +24,7 @@ class UserProfilesServiceControllerSpecForHttpPost extends UserProfilesServiceCo
            |  "salutation": "Mr",
            |  "telephone": "+11 11 111111",
            |  "type": "barrister",
-           |  "orgName": "$orgName",
+           |  "orgId": "$orgName",
            |  "address": { "postcode": "E00 00P" }
            |}
         """.stripMargin)
@@ -53,7 +53,7 @@ class UserProfilesServiceControllerSpecForHttpPost extends UserProfilesServiceCo
            |  "salutation": "Mr",
            |  "telephone": "+11 11 111111",
            |  "type": "barrister",
-           |  "orgName": "$orgName",
+           |  "orgId": "$orgName",
            |  "address": { "postcode": "E00 00P" }
            |}
         """.stripMargin)

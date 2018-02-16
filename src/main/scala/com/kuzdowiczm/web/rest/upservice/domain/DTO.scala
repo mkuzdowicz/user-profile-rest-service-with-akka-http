@@ -15,7 +15,7 @@ sealed case class CreateOrUpdateUserReq(
                                          salutation: String,
                                          telephone: String,
                                          `type`: String,
-                                         orgName: String,
+                                         orgId: String,
                                          address: Address
                                        )
 

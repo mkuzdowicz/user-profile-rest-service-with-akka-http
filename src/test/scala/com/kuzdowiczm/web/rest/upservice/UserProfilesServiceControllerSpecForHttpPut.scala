@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.ContentTypes.`application/json`
 import akka.http.scaladsl.model.HttpEntity
 import akka.http.scaladsl.model.StatusCodes.OK
 import akka.util.ByteString
-import com.kuzdowiczm.web.rest.upservice.domain.{ResponseResource, UserProfile}
+import com.kuzdowiczm.web.rest.upservice.domain.ResponseResource
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
 class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceControllerSpecTrait {
@@ -12,7 +12,6 @@ class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceCon
   s"update user profile when http Put on $usersPath endpoint is hitted" in {
 
     val userToUpdate = DataInitHelper.initOneOrgAndOneUser
-    val orgName = userToUpdate.organisation.name
 
     val jsonRequest = ByteString(
       s"""
@@ -24,7 +23,7 @@ class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceCon
          |  "salutation": "${userToUpdate.salutation}",
          |  "telephone": "${userToUpdate.telephone}",
          |  "type": "${userToUpdate.`type`}",
-         |  "orgName": "$orgName",
+         |  "orgId": "${userToUpdate.organisation.id}",
          |  "address": { "postcode": "${userToUpdate.address.postcode}"}
          |}
         """.stripMargin)

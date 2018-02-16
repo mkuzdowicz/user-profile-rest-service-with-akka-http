@@ -16,12 +16,12 @@ object OrganisationsRepoInMemoImpl extends OrganisationsRepo {
       `type` = createOrgReq.`type`,
       address = createOrgReq.address
     )
-    InMemoDB.organisations += createOrgReq.name -> newOrg
+    InMemoDB.organisations += orgUUID -> newOrg
     Option(newOrg)
   }
 
-  def findOneBy(name: String): Option[Organisation] = {
-    InMemoDB.organisations.get(name)
+  def findOneBy(id: String): Option[Organisation] = {
+    InMemoDB.organisations.get(id)
   }
 
 }

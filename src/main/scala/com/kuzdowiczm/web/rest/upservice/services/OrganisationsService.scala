@@ -15,8 +15,8 @@ class OrganisationsService(implicit private val orgsRepo: OrganisationsRepo) {
     orgsRepo.create(createOrgReq)
   }
 
-  def findOneBy(name: String): Organisation = {
-    orgsRepo.findOneBy(name).orNull
+  def findOneBy(id: String): Organisation = {
+    orgsRepo.findOneBy(id).orNull
   }
 
 }
