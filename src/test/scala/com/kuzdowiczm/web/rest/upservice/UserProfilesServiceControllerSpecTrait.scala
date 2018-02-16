@@ -13,7 +13,7 @@ trait UserProfilesServiceControllerSpecTrait extends WordSpec
   with OneInstancePerTest
   with UserProfilesServiceControllerJsonSupport {
 
-  override def beforeEach(): Unit = {
+  override def afterEach(): Unit = {
     clearInMemoDB(InMemoDB)
   }
 
