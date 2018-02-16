@@ -51,7 +51,7 @@ class UserProfilesServiceController(implicit private val usrProfilesRepo: UserPr
             } ~ delete {
               usrProfilesService.deleteOneBy(id) match {
                 case Some(_) => complete(NoContent)
-                case None => complete(NotFound, ifNoUserProfileFor(id))
+                case None => complete(NotFound, ResponseResource(msg = Option(ifNoUserProfileFor(id))))
               }
             }
           } ~
@@ -65,7 +65,7 @@ class UserProfilesServiceController(implicit private val usrProfilesRepo: UserPr
               entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
                 usrProfilesService.createOrUpdate(updateUsrReq) match {
                   case Some(updatedUsr) => complete(OK, updatedUsr)
-                  case None => complete(NotFound, ifNoUserProfileFor(updateUsrReq.id.get))
+                  case None => complete(NotFound, ResponseResource(msg = Option(ifNoUserProfileFor(updateUsrReq.id.get))))
                 }
               }
             }
