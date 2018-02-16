@@ -10,7 +10,7 @@ class UserProfilesServiceControllerSpecForHttpGet extends UserProfilesServiceCon
 
   "user profile service" should {
 
-    s"return docs like response when http GET on $mainEndpoint/ endpoint" in {
+    s"return docs like response when http GET on $mainEndpoint/ endpoint is hitted" in {
       Get(s"/$mainEndpoint/") ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual OK
         contentType shouldEqual `application/json`
