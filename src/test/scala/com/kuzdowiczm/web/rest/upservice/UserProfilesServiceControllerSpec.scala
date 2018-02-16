@@ -8,7 +8,7 @@ import akka.util.ByteString
 import com.kuzdowiczm.web.rest.upservice.InMemoDBTestUtils.clearInMemoDB
 import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
-import com.kuzdowiczm.web.rest.upservice.helpers.ErrorMessagesHelper.ifNoUserProfileFor
+import com.kuzdowiczm.web.rest.upservice.helpers.ResponseMessagesHelper.ifNoUserProfileFor
 import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.{InMemoDB, OrganisationsRepoInMemoImpl, UserProfilesRepoInMemoImpl}
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}

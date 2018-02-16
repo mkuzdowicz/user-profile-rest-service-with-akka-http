@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
 import akka.http.scaladsl.server.Directives
 import com.kuzdowiczm.web.rest.upservice.domain.{Address, CreateOrUpdateUserReq, Organisation, UserProfile}
 import com.kuzdowiczm.web.rest.upservice.helpers.DocsResponse.SERVICE_LINKS_MAP
-import com.kuzdowiczm.web.rest.upservice.helpers.ErrorMessagesHelper.{ifNewUserCreatedWith, ifNoUserProfileFor, ifUserUserUpdatedWith}
+import com.kuzdowiczm.web.rest.upservice.helpers.ResponseMessagesHelper.ifNoUserProfileFor
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import com.typesafe.config.ConfigFactory

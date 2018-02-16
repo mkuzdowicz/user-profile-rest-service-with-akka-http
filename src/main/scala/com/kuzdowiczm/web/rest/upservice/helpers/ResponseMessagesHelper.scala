@@ -1,6 +1,6 @@
 package com.kuzdowiczm.web.rest.upservice.helpers
 
-object ErrorMessagesHelper {
+object ResponseMessagesHelper {
 
   def ifNoUserProfileFor(id: String) = s"there is no user profile with id: $id"
 
