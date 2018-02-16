@@ -18,7 +18,6 @@ object DataInitHelper {
 
     val usr1 = usrProfilesService.createOrUpdate(
       CreateOrUpdateUserReq(
-        id = None,
         firstname = "Martin",
         lastname = "Kuzdowicz",
         email = "martin.kuzdowicz@gmail.com",

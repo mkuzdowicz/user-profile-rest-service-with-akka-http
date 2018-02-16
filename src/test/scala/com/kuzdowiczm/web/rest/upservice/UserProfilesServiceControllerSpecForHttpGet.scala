@@ -2,7 +2,7 @@ package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.model.ContentTypes.{`application/json`, `text/plain(UTF-8)`}
 import akka.http.scaladsl.model.StatusCodes.{NotFound, OK}
-import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
+import com.kuzdowiczm.web.rest.upservice.domain.{ResponseResource, UserProfile}
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 import com.kuzdowiczm.web.rest.upservice.helpers.ResponseMessagesHelper.ifNoUserProfileFor
 
@@ -19,12 +19,12 @@ class UserProfilesServiceControllerSpecForHttpGet extends UserProfilesServiceCon
     }
 
     s"return error message when http GET on /$usersPath/<non_existing_user_id> endpoint is hitted" in {
-      val nonExitingUserID = "fake-id-1456-ofp"
+      val nonExitingUserID = "fake-id-123-ofp"
       val endpoint = s"$usersPath/$nonExitingUserID"
       Get(endpoint) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual NotFound
-        contentType shouldEqual `text/plain(UTF-8)`
-        responseAs[String] shouldEqual ifNoUserProfileFor(nonExitingUserID)
+        contentType shouldEqual `application/json`
+        responseAs[ResponseResource].msg.get shouldEqual ifNoUserProfileFor(nonExitingUserID)
       }
     }
 

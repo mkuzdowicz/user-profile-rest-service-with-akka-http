@@ -8,7 +8,7 @@ sealed case class CreateOrgReq(
                               )
 
 sealed case class CreateOrUpdateUserReq(
-                                         id: Option[String],
+                                         id: Option[String] = None,
                                          firstname: String,
                                          lastname: String,
                                          email: String,
@@ -18,3 +18,8 @@ sealed case class CreateOrUpdateUserReq(
                                          orgName: String,
                                          address: Address
                                        )
+
+sealed case class ResponseResource(
+                                    userProfile: Option[UserProfile] = None,
+                                    msg: Option[String] = None
+                                  )
