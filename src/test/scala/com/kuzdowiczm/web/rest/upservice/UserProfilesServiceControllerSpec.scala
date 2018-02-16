@@ -2,7 +2,7 @@ package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.model.ContentTypes.{`application/json`, `text/plain(UTF-8)`}
 import akka.http.scaladsl.model.HttpEntity
-import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK, BadRequest}
+import akka.http.scaladsl.model.StatusCodes.{Created, NoContent, NotFound, OK}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.util.ByteString
 import com.kuzdowiczm.web.rest.upservice.InMemoDBTestUtils.clearInMemoDB
@@ -79,7 +79,7 @@ class UserProfilesServiceControllerSpec extends WordSpec with Matchers with Befo
       val endpoint = s"$usersPath"
       Post(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual Created
-//        contentType shouldEqual `application/json`
+        contentType shouldEqual `application/json`
         responseAs[UserProfile].firstname shouldEqual "testFirstname"
         responseAs[UserProfile].lastname shouldEqual "testLastname"
         responseAs[UserProfile].id.nonEmpty shouldBe true
@@ -96,5 +96,36 @@ class UserProfilesServiceControllerSpec extends WordSpec with Matchers with Befo
       usrProfilesRepo.findAll().size shouldBe 0
     }
   }
+
+  s"update user profile when http POST on /$usersPath endpoint is hitted" in {
+
+    val userToUpdate = DataInitHelper.initOneOrgAndOneUser
+    val orgName = userToUpdate.organisation.name
+
+    val jsonRequest = ByteString(
+      s"""
+         |{
+         |  "id": "${userToUpdate.id}",
+         |  "firstname": "newFirstname",
+         |  "lastname": "${userToUpdate.lastname}",
+         |  "email": "${userToUpdate.email}",
+         |  "salutation": "${userToUpdate.salutation}",
+         |  "telephone": "${userToUpdate.telephone}",
+         |  "type": "${userToUpdate.`type`}",
+         |  "orgName": "$orgName",
+         |  "address": { "postcode": "${userToUpdate.address.postcode}"}
+         |}
+        """.stripMargin)
+
+    val endpoint = s"$usersPath"
+    Put(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
+      status shouldEqual OK
+      contentType shouldEqual `application/json`
+      responseAs[UserProfile].firstname shouldEqual "newFirstname"
+      responseAs[UserProfile].lastname shouldEqual userToUpdate.lastname
+      responseAs[UserProfile].id shouldEqual userToUpdate.id
+    }
+  }
+
 
 }
