@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.ContentTypes.`application/json`
 import akka.http.scaladsl.model.HttpEntity
 import akka.http.scaladsl.model.StatusCodes.OK
 import akka.util.ByteString
-import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
+import com.kuzdowiczm.web.rest.upservice.domain.{ResponseResource, UserProfile}
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
 class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceControllerSpecTrait {
@@ -33,9 +33,9 @@ class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceCon
     Put(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
       status shouldEqual OK
       contentType shouldEqual `application/json`
-      responseAs[UserProfile].firstname shouldEqual "newFirstname"
-      responseAs[UserProfile].lastname shouldEqual userToUpdate.lastname
-      responseAs[UserProfile].id shouldEqual userToUpdate.id
+      responseAs[ResponseResource].userProfile.firstname shouldEqual "newFirstname"
+      responseAs[ResponseResource].userProfile.lastname shouldEqual userToUpdate.lastname
+      responseAs[ResponseResource].userProfile.id shouldEqual userToUpdate.id
     }
   }
 

@@ -15,7 +15,7 @@ trait UserProfilesServiceControllerJsonSupport extends SprayJsonSupport with Def
   implicit val organisationFormat = jsonFormat5(Organisation)
   implicit val usrProfileFormat = jsonFormat9(UserProfile)
   implicit val createUserReq = jsonFormat9(CreateOrUpdateUserReq)
-  implicit val responseResource = jsonFormat2(ResponseResource)
+  implicit val responseResource = jsonFormat1(ResponseResource)
 }
 
 object UserProfilesServiceController {
@@ -44,20 +44,20 @@ class UserProfilesServiceController(implicit private val usrProfilesRepo: UserPr
           path(Segment) { id =>
             get {
               usrProfilesService.findOneBy(id) match {
-                case Some(userProfile) => complete(OK, userProfile)
+                case Some(userProfile) => complete(OK, ResponseResource(userProfile))
                 case None => complete(NotFound)
               }
             } ~ delete {
               usrProfilesService.deleteOneBy(id) match {
                 case Some(_) => complete(NoContent)
-                case None => complete(NotFound)
+                case None => complete(BadRequest)
               }
             }
           } ~
             post {
               entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
                 usrProfilesService.createOrUpdate(createUsrReq) match {
-                  case Some(newUsr) => complete(Created, newUsr)
+                  case Some(newUsr) => complete(Created, ResponseResource(newUsr))
                   case None => complete(Conflict)
                 }
               }
@@ -65,8 +65,8 @@ class UserProfilesServiceController(implicit private val usrProfilesRepo: UserPr
             put {
               entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
                 usrProfilesService.createOrUpdate(updateUsrReq) match {
-                  case Some(updatedUsr) => complete(OK, updatedUsr)
-                  case None => complete(NotFound)
+                  case Some(updatedUsr) => complete(OK, ResponseResource(updatedUsr))
+                  case None => complete(BadRequest)
                 }
               }
             }

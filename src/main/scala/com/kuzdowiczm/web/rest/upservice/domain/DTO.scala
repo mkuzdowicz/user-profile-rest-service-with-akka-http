@@ -19,7 +19,4 @@ sealed case class CreateOrUpdateUserReq(
                                          address: Address
                                        )
 
-sealed case class ResponseResource(
-                                    userProfile: Option[UserProfile] = None,
-                                    msg: Option[String] = None
-                                  )
+sealed case class ResponseResource(userProfile: UserProfile)

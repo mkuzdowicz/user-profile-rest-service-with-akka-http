@@ -2,7 +2,7 @@ package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.model.ContentTypes.`application/json`
 import akka.http.scaladsl.model.StatusCodes.{NotFound, OK}
-import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
+import com.kuzdowiczm.web.rest.upservice.domain.ResponseResource
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
 
@@ -31,7 +31,7 @@ class UserProfilesServiceControllerSpecForHttpGet extends UserProfilesServiceCon
       Get(endpoint) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual OK
         contentType shouldEqual `application/json`
-        responseAs[UserProfile] shouldEqual existingUser
+        responseAs[ResponseResource].userProfile shouldEqual existingUser
       }
     }
   }

@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.ContentTypes.`application/json`
 import akka.http.scaladsl.model.HttpEntity
 import akka.http.scaladsl.model.StatusCodes.Created
 import akka.util.ByteString
-import com.kuzdowiczm.web.rest.upservice.domain.UserProfile
+import com.kuzdowiczm.web.rest.upservice.domain.{ResponseResource, UserProfile}
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
 class UserProfilesServiceControllerSpecForHttpPost extends UserProfilesServiceControllerSpecTrait {
@@ -33,9 +33,9 @@ class UserProfilesServiceControllerSpecForHttpPost extends UserProfilesServiceCo
       Post(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual Created
         contentType shouldEqual `application/json`
-        responseAs[UserProfile].firstname shouldEqual "testFirstname"
-        responseAs[UserProfile].lastname shouldEqual "testLastname"
-        responseAs[UserProfile].id.nonEmpty shouldBe true
+        responseAs[ResponseResource].userProfile.firstname shouldEqual "testFirstname"
+        responseAs[ResponseResource].userProfile.lastname shouldEqual "testLastname"
+        responseAs[ResponseResource].userProfile.id.nonEmpty shouldBe true
       }
     }
 
@@ -62,9 +62,9 @@ class UserProfilesServiceControllerSpecForHttpPost extends UserProfilesServiceCo
       Post(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
         status shouldEqual Created
         contentType shouldEqual `application/json`
-        responseAs[UserProfile].firstname shouldEqual "testFirstname"
-        responseAs[UserProfile].lastname shouldEqual "testLastname"
-        responseAs[UserProfile].id.nonEmpty shouldBe true
+        responseAs[ResponseResource].userProfile.firstname shouldEqual "testFirstname"
+        responseAs[ResponseResource].userProfile.lastname shouldEqual "testLastname"
+        responseAs[ResponseResource].userProfile.id.nonEmpty shouldBe true
       }
     }
 
