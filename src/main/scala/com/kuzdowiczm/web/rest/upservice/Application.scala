@@ -16,7 +16,7 @@ object Application extends App {
 
   DataInitHelper.initOneOrgAndOneUser
 
-  val usrProfServiceCtrlRouter = new UsrProfilesServiceCtrl().route
+  val usrProfServiceCtrlRouter =  UserProfilesServiceController.apply.route
 
   val host = cfg.getString("app.host")
   val port = cfg.getInt("app.port")
