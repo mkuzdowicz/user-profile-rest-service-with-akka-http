@@ -4,12 +4,13 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.kuzdowiczm.web.rest.upservice.InMemoDBTestUtils.clearInMemoDB
 import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.{InMemoDB, OrganisationsRepoInMemoImpl, UserProfilesRepoInMemoImpl}
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
-import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfterEach, Matchers, OneInstancePerTest, WordSpec}
 
 trait UserProfilesServiceControllerSpecTrait extends WordSpec
   with Matchers
   with BeforeAndAfterEach
   with ScalatestRouteTest
+  with OneInstancePerTest
   with UserProfilesServiceControllerJsonSupport {
 
   override def beforeEach(): Unit = {

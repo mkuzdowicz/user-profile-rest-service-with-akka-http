@@ -12,7 +12,7 @@ object UserProfilesService {
 class UserProfilesService(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo) {
 
   def createOrUpdate(createUserReq: CreateOrUpdateUserReq): Option[UserProfile] = {
-    val org = orgsRepo.findOneBy(createUserReq.orgId).orNull
+    val org = orgsRepo.findOneBy(createUserReq.orgId)
     usrProfilesRepo.createOrUpdateFrom(createUserReq, org)
   }
 

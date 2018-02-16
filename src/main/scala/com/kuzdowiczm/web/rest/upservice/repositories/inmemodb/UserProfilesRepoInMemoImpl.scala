@@ -7,7 +7,7 @@ import com.kuzdowiczm.web.rest.upservice.repositories.UserProfilesRepo
 
 object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
 
-  def createOrUpdateFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): Option[UserProfile] = {
+  def createOrUpdateFrom(createUserReq: CreateOrUpdateUserReq, org: Option[Organisation]): Option[UserProfile] = {
     createUserReq.id match {
       case Some(usrId) => {
         if (usrId.nonEmpty) update(createUserReq, org) else createNewFrom(createUserReq, org)
@@ -16,7 +16,7 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
     }
   }
 
-  private def createNewFrom(createUserReq: CreateOrUpdateUserReq, org: Organisation): Option[UserProfile] = {
+  private def createNewFrom(createUserReq: CreateOrUpdateUserReq, org: Option[Organisation]): Option[UserProfile] = {
     val uuid = UUID.randomUUID().toString
     val newUserProfile = mapToUserProfile(uuid, createUserReq, org)
     InMemoDB.userProfiles += uuid -> newUserProfile
@@ -24,7 +24,7 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
     Option(newUserProfile)
   }
 
-  private def mapToUserProfile(uuid: String, createUserReq: CreateOrUpdateUserReq, org: Organisation): UserProfile = {
+  private def mapToUserProfile(uuid: String, createUserReq: CreateOrUpdateUserReq, org: Option[Organisation]): UserProfile = {
     val newUserProfile = UserProfile(
       id = uuid,
       firstname = createUserReq.firstname,
@@ -39,7 +39,7 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
     newUserProfile
   }
 
-  private def update(createUserReq: CreateOrUpdateUserReq, org: Organisation): Option[UserProfile] = {
+  private def update(createUserReq: CreateOrUpdateUserReq, org: Option[Organisation]): Option[UserProfile] = {
     val usrId = createUserReq.id.get
     if (!InMemoDB.userProfiles.contains(usrId)) return None
     val updatedUserProfile = mapToUserProfile(usrId, createUserReq, org)

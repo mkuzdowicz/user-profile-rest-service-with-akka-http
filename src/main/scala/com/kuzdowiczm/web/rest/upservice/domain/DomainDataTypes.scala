@@ -18,6 +18,6 @@ sealed case class UserProfile(
                                salutation: String,
                                telephone: String,
                                `type`: String,
-                               organisation: Organisation,
+                               organisation: Option[Organisation],
                                address: Address
                              )

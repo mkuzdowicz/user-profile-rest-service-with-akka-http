@@ -23,7 +23,7 @@ class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceCon
          |  "salutation": "${userToUpdate.salutation}",
          |  "telephone": "${userToUpdate.telephone}",
          |  "type": "${userToUpdate.`type`}",
-         |  "orgId": "${userToUpdate.organisation.id}",
+         |  "orgId": "${userToUpdate.organisation.get.id}",
          |  "address": { "postcode": "${userToUpdate.address.postcode}"}
          |}
         """.stripMargin)
