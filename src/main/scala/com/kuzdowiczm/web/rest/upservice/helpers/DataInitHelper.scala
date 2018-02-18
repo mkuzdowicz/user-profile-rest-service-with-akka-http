@@ -10,7 +10,7 @@ object DataInitHelper {
   private val log = LoggerFactory.getLogger(getClass)
 
   def initOneOrgAndOneUser(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): UserProfile = {
-    log.info(s"creating initial data")
+    log.info(s"creating initial data ...")
 
     val usrProfilesService = UserProfilesService.apply
 
