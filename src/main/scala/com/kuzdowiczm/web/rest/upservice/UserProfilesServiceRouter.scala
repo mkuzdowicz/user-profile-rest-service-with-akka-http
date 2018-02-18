@@ -10,7 +10,7 @@ import com.kuzdowiczm.web.rest.upservice.services.UserProfilesService
 import com.typesafe.config.ConfigFactory
 import spray.json.DefaultJsonProtocol
 
-trait UserProfilesServiceControllerJsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
+trait UserProfilesServiceRouterJsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
   implicit val addressFormat = jsonFormat1(Address)
   implicit val organisationFormat = jsonFormat5(Organisation)
   implicit val usrProfileFormat = jsonFormat9(UserProfile)
@@ -18,14 +18,14 @@ trait UserProfilesServiceControllerJsonSupport extends SprayJsonSupport with Def
   implicit val responseResource = jsonFormat1(ResponseResource)
 }
 
-object UserProfilesServiceController {
-  def apply(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): UserProfilesServiceController = {
-    new UserProfilesServiceController()
+object UserProfilesServiceRouter {
+  def apply(implicit usrProfilesRepo: UserProfilesRepo, orgsRepo: OrganisationsRepo): UserProfilesServiceRouter = {
+    new UserProfilesServiceRouter()
   }
 }
 
-class UserProfilesServiceController(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
-  extends Directives with UserProfilesServiceControllerJsonSupport {
+class UserProfilesServiceRouter(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo)
+  extends Directives with UserProfilesServiceRouterJsonSupport {
 
   private val cfg = ConfigFactory.load()
   val mainEndpoint = cfg.getString("app.service_main_endpoint")

@@ -7,7 +7,7 @@ import akka.util.ByteString
 import com.kuzdowiczm.web.rest.upservice.domain.ResponseResource
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
-class UserProfilesServiceControllerSpecForHttpPut extends UserProfilesServiceControllerSpecTrait {
+class UserProfilesServiceRouterSpecForHttpPut extends UserProfilesServiceRouterSpecTrait {
 
   s"update user profile when http Put on $usersPath endpoint is hitted" in {
 

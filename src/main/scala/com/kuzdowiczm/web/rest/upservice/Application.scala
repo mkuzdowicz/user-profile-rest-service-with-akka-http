@@ -16,11 +16,11 @@ object Application extends App {
 
   DataInitHelper.initOneOrgAndOneUser
 
-  val usrProfServiceCtrlRouter =  UserProfilesServiceController.apply.route
+  val usrProfServiceRouter =  UserProfilesServiceRouter.apply.route
 
   val host = cfg.getString("app.host")
   val port = cfg.getInt("app.port")
 
-  Server.startServer(usrProfServiceCtrlRouter, host, port)
+  Server.startServer(usrProfServiceRouter, host, port)
 
 }

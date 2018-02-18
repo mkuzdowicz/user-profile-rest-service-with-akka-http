@@ -6,7 +6,7 @@ import com.kuzdowiczm.web.rest.upservice.domain.ResponseResource
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
 
-class UserProfilesServiceControllerSpecForHttpGet extends UserProfilesServiceControllerSpecTrait {
+class UserProfilesServiceRouterSpecForHttpGet extends UserProfilesServiceRouterSpecTrait {
 
   "user profile service" should {
 

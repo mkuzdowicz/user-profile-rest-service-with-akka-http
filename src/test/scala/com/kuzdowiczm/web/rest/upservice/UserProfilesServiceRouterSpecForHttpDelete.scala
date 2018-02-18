@@ -3,7 +3,7 @@ package com.kuzdowiczm.web.rest.upservice
 import akka.http.scaladsl.model.StatusCodes.NoContent
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
-class UserProfilesServiceControllerSpecForHttpDelete extends UserProfilesServiceControllerSpecTrait {
+class UserProfilesServiceRouterSpecForHttpDelete extends UserProfilesServiceRouterSpecTrait {
 
   "user profile service" should {
 

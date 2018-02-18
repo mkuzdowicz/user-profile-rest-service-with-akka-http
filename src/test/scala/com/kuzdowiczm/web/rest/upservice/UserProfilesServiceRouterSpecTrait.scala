@@ -6,12 +6,12 @@ import com.kuzdowiczm.web.rest.upservice.repositories.inmemodb.{InMemoDB, Organi
 import com.kuzdowiczm.web.rest.upservice.repositories.{OrganisationsRepo, UserProfilesRepo}
 import org.scalatest.{BeforeAndAfterEach, Matchers, OneInstancePerTest, WordSpec}
 
-trait UserProfilesServiceControllerSpecTrait extends WordSpec
+trait UserProfilesServiceRouterSpecTrait extends WordSpec
   with Matchers
   with BeforeAndAfterEach
   with ScalatestRouteTest
   with OneInstancePerTest
-  with UserProfilesServiceControllerJsonSupport {
+  with UserProfilesServiceRouterJsonSupport {
 
   override def afterEach(): Unit = {
     clearInMemoDB(InMemoDB)
@@ -20,7 +20,7 @@ trait UserProfilesServiceControllerSpecTrait extends WordSpec
   implicit val usrProfilesRepo: UserProfilesRepo = UserProfilesRepoInMemoImpl
   implicit val orgsRepo: OrganisationsRepo = OrganisationsRepoInMemoImpl
 
-  val usrProfServiceCtrl = UserProfilesServiceController.apply
+  val usrProfServiceCtrl = UserProfilesServiceRouter.apply
   val usrProfServiceCtrlRouter = usrProfServiceCtrl.route
 
   val mainEndpoint = usrProfServiceCtrl.mainEndpoint

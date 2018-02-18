@@ -7,7 +7,7 @@ import akka.util.ByteString
 import com.kuzdowiczm.web.rest.upservice.domain.{ResponseResource, UserProfile}
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
 
-class UserProfilesServiceControllerSpecForHttpPost extends UserProfilesServiceControllerSpecTrait {
+class UserProfilesServiceRouterSpecForHttpPost extends UserProfilesServiceRouterSpecTrait {
 
   "user profile service" should {
 

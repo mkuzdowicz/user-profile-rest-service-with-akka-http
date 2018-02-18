@@ -3,6 +3,7 @@ package com.kuzdowiczm.web.rest.upservice
 import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.DebuggingDirectives
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
@@ -18,7 +19,7 @@ object Server {
   private val appName = cfg.getString("app.service_name")
 
   // AKKA http web toolkit dependencies
-  implicit val system = ActorSystem(appName)
+  implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
   implicit val timeout = Timeout(10 seconds)
@@ -28,7 +29,7 @@ object Server {
     val routerWithLogging = DebuggingDirectives.
       logRequestResult("router with logging", Logging.InfoLevel)(route)
 
-    Http().bindAndHandle(handler = routerWithLogging, interface = host, port = port) map { binding =>
+    Http().bindAndHandleAsync(handler = Route.asyncHandler(routerWithLogging), interface = host, port = port) map { binding =>
       log.info(s"$appName running on ${binding.localAddress}")
     } recover { case ex =>
       ex.printStackTrace()
