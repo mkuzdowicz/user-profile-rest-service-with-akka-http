@@ -3,7 +3,7 @@ name := "user-profile-service"
 
 version := "0.1"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.4"
 
 val akkaHttpVersion = "10.1.0-RC1"
 
@@ -17,8 +17,6 @@ libraryDependencies ++=
     "com.typesafe" % "config" % "1.3.1",
     "org.scalatest" %% "scalatest" % "3.0.3" % Test
   )
-
-resolvers += "maven2" at "http://central.maven.org/maven2/"
 
 
 

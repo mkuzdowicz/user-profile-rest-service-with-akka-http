@@ -5,8 +5,8 @@
 
 ### requierments
 - Java 8
-- Scala 2.11
-- SBT 0.13
+- Scala 2.12.4
+- sbt 1.0.4
 
 ### run tests
 
