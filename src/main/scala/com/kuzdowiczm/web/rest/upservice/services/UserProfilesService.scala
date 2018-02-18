@@ -11,7 +11,15 @@ object UserProfilesService {
 
 class UserProfilesService(implicit private val usrProfilesRepo: UserProfilesRepo, private val orgsRepo: OrganisationsRepo) {
 
-  def createOrUpdate(createUserReq: CreateOrUpdateUserReq): Option[UserProfile] = {
+  def createNewFrom(createUserReq: CreateOrUpdateUserReq): Option[UserProfile] = {
+    val org = orgsRepo.findOneBy(createUserReq.orgId)
+    createUserReq.id match {
+      case None => usrProfilesRepo.createOrUpdateFrom(createUserReq, org)
+      case Some(_) => None
+    }
+  }
+
+  def update(createUserReq: CreateOrUpdateUserReq): Option[UserProfile] = {
     val org = orgsRepo.findOneBy(createUserReq.orgId)
     usrProfilesRepo.createOrUpdateFrom(createUserReq, org)
   }

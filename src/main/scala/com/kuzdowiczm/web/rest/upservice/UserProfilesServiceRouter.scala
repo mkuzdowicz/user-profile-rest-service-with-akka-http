@@ -56,7 +56,7 @@ class UserProfilesServiceRouter(implicit private val usrProfilesRepo: UserProfil
           } ~
             post {
               entity(as[CreateOrUpdateUserReq]) { createUsrReq =>
-                usrProfilesService.createOrUpdate(createUsrReq) match {
+                usrProfilesService.createNewFrom(createUsrReq) match {
                   case Some(newUsr) => complete(Created, ResponseResource(newUsr))
                   case None => complete(Conflict)
                 }
@@ -64,7 +64,7 @@ class UserProfilesServiceRouter(implicit private val usrProfilesRepo: UserProfil
             } ~
             put {
               entity(as[CreateOrUpdateUserReq]) { updateUsrReq =>
-                usrProfilesService.createOrUpdate(updateUsrReq) match {
+                usrProfilesService.update(updateUsrReq) match {
                   case Some(updatedUsr) => complete(OK, ResponseResource(updatedUsr))
                   case None => complete(BadRequest)
                 }

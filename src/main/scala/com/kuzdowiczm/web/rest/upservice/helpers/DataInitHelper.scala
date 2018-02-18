@@ -16,7 +16,7 @@ object DataInitHelper {
 
     val orgId = initOneOrg
 
-    val usr1 = usrProfilesService.createOrUpdate(
+    val usr1 = usrProfilesService.createNewFrom(
       CreateOrUpdateUserReq(
         firstname = "Martin",
         lastname = "Kuzdowicz",
@@ -29,7 +29,7 @@ object DataInitHelper {
       )
     ).get
 
-    log.info(s"usr1 => $usr1")
+    log.info(s"usr1 => ${usr1.id}")
     usr1
   }
 
@@ -43,7 +43,7 @@ object DataInitHelper {
       address = Address(postcode = "EC2 67")
     )).get
 
-    log.info(s"org => $org")
+    log.info(s"org => ${org.id}")
     org.id
   }
 

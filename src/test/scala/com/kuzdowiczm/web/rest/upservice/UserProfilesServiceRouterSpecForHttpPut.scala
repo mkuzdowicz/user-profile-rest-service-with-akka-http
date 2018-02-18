@@ -33,6 +33,12 @@ class UserProfilesServiceRouterSpecForHttpPut extends UserProfilesServiceRouterS
       contentType shouldEqual `application/json`
       responseAs[ResponseResource].userProfile.firstname shouldEqual "newFirstname"
       responseAs[ResponseResource].userProfile.lastname shouldEqual userToUpdate.lastname
+      responseAs[ResponseResource].userProfile.email shouldEqual userToUpdate.email
+      responseAs[ResponseResource].userProfile.salutation shouldEqual userToUpdate.salutation
+      responseAs[ResponseResource].userProfile.telephone shouldEqual userToUpdate.telephone
+      responseAs[ResponseResource].userProfile.`type` shouldEqual userToUpdate.`type`
+      responseAs[ResponseResource].userProfile.organisation.get.id shouldEqual userToUpdate.organisation.get.id
+      responseAs[ResponseResource].userProfile.address.postcode shouldEqual userToUpdate.address.postcode
       responseAs[ResponseResource].userProfile.id shouldEqual userToUpdate.id
     }
   }
