@@ -2,7 +2,7 @@ package com.kuzdowiczm.web.rest.upservice
 
 import akka.http.scaladsl.model.ContentTypes.`application/json`
 import akka.http.scaladsl.model.HttpEntity
-import akka.http.scaladsl.model.StatusCodes.OK
+import akka.http.scaladsl.model.StatusCodes.{OK, BadRequest}
 import akka.util.ByteString
 import com.kuzdowiczm.web.rest.upservice.domain.ResponseResource
 import com.kuzdowiczm.web.rest.upservice.helpers.DataInitHelper
@@ -28,13 +28,34 @@ class UserProfilesServiceRouterSpecForHttpPut extends UserProfilesServiceRouterS
          |}
         """.stripMargin)
 
-    val endpoint = s"$usersPath"
-    Put(endpoint, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
+    Put(usersPath, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
       status shouldEqual OK
       contentType shouldEqual `application/json`
       responseAs[ResponseResource].userProfile.firstname shouldEqual "newFirstname"
       responseAs[ResponseResource].userProfile.lastname shouldEqual userToUpdate.lastname
       responseAs[ResponseResource].userProfile.id shouldEqual userToUpdate.id
+    }
+  }
+
+  s"return BadRequest when http Put on $usersPath/<non_existing_user_id>  endpoint is hitted" in {
+
+    val jsonRequest = ByteString(
+      s"""
+         |{
+         |  "id": "fake-123",
+         |  "firstname": "newFirstname",
+         |  "lastname": "non",
+         |  "email": "email",
+         |  "salutation": "Mr",
+         |  "telephone": "123",
+         |  "type": "barrister",
+         |  "orgId": "123",
+         |  "address": { "postcode": "EC2 99Y"}
+         |}
+        """.stripMargin)
+
+    Put(usersPath, HttpEntity(`application/json`, jsonRequest)) ~> usrProfServiceCtrlRouter ~> check {
+      status shouldEqual BadRequest
     }
   }
 
