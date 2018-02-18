@@ -29,7 +29,7 @@ object DataInitHelper {
       )
     ).get
 
-    log.info(s"usr1 => ${usr1.id}")
+    log.info(s"initial user id => ${usr1.id}")
     usr1
   }
 
@@ -43,7 +43,7 @@ object DataInitHelper {
       address = Address(postcode = "EC2 67")
     )).get
 
-    log.info(s"org => ${org.id}")
+    log.info(s"initial organisation id => ${org.id}")
     org.id
   }
 
