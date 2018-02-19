@@ -19,7 +19,7 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
   private def createNewFrom(createUserReq: CreateOrUpdateUserReq, org: Option[Organisation]): Option[UserProfile] = {
     val uuid = UUID.randomUUID().toString
     val newUserProfile = mapToUserProfile(uuid, createUserReq, org)
-    InMemoDB.userProfiles += uuid -> newUserProfile
+    InMemoDB.userProfiles() += uuid -> newUserProfile
 
     Option(newUserProfile)
   }
@@ -41,18 +41,18 @@ object UserProfilesRepoInMemoImpl extends UserProfilesRepo {
 
   private def update(createUserReq: CreateOrUpdateUserReq, org: Option[Organisation]): Option[UserProfile] = {
     val usrId = createUserReq.id.get
-    if (!InMemoDB.userProfiles.contains(usrId)) return None
+    if (!InMemoDB.userProfiles().contains(usrId)) return None
     val updatedUserProfile = mapToUserProfile(usrId, createUserReq, org)
-    InMemoDB.userProfiles += usrId -> updatedUserProfile
+    InMemoDB.userProfiles() += usrId -> updatedUserProfile
     Option(updatedUserProfile)
   }
 
   def findOneBy(id: String): Option[UserProfile] = {
-    InMemoDB.userProfiles.get(id)
+    InMemoDB.userProfiles().get(id)
   }
 
   def deleteOneBy(id: String): Option[UserProfile] = {
-    InMemoDB.userProfiles.remove(id)
+    InMemoDB.userProfiles().remove(id)
   }
 
 }

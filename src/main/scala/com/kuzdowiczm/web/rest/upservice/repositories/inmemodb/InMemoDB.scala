@@ -4,10 +4,18 @@ import com.kuzdowiczm.web.rest.upservice.domain.{Organisation, UserProfile}
 
 object InMemoDB {
 
-  val userProfiles: scala.collection.mutable.Map[String, UserProfile] =
+  private val userIdToUserProfile: scala.collection.mutable.Map[String, UserProfile] =
     scala.collection.mutable.Map[String, UserProfile]()
 
-  val organisations: scala.collection.mutable.Map[String, Organisation] =
+  private val orgIdToOrganisation: scala.collection.mutable.Map[String, Organisation] =
     scala.collection.mutable.Map[String, Organisation]()
+
+  def userProfiles() = this.synchronized {
+    userIdToUserProfile
+  }
+
+  def organisations() = this.synchronized {
+    orgIdToOrganisation
+  }
 
 }
