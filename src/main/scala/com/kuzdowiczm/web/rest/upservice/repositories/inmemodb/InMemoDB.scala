@@ -10,11 +10,11 @@ object InMemoDB {
   private val orgIdToOrganisation: scala.collection.mutable.Map[String, Organisation] =
     scala.collection.mutable.Map[String, Organisation]()
 
-  def userProfiles() = this.synchronized {
+  def userProfiles() = {
     userIdToUserProfile
   }
 
-  def organisations() = this.synchronized {
+  def organisations() = {
     orgIdToOrganisation
   }
 
