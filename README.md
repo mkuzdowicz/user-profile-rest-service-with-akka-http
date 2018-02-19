@@ -98,4 +98,4 @@ With that initial data you can execute example requests in the browser or with P
 
 - endpoints and functions for handling organisations
 - endpoint for all users with pagination
-- usage of database not an in memory solution
+- implementation with a real database not only an in memory solution
